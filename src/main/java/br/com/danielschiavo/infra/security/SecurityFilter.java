@@ -3,7 +3,6 @@ package br.com.danielschiavo.infra.security;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -28,25 +27,20 @@ public class SecurityFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response
 			, FilterChain filterChain) throws ServletException, IOException {
 		
-		var token = recoverToken(request);
+		String tokenComBearer = request.getHeader("Authorization");
 		
-		if (token != null) {
-			Long subject = tokenJWTService.getClaimIdJWT(token);
+		String tokenSemBearer = null;
+		if (tokenComBearer != null) {
+			tokenSemBearer = tokenComBearer.replace("Bearer ", "");
+		}
+		
+		if (tokenSemBearer != null) {
+			Long subject = tokenJWTService.getClaimIdJWT(tokenSemBearer);
 			UserDetails client = clienteRepository.buscarPorId(subject);
-			var authentication = new UsernamePasswordAuthenticationToken(client, null, client.getAuthorities());
+			var authentication = new JwtAuthenticationToken(client, null, tokenComBearer, client.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 		
 		filterChain.doFilter(request, response);
 	}
-
-	private String recoverToken(HttpServletRequest request) {
-		String authorization = request.getHeader("Authorization");
-		
-		if (authorization != null) {
-			return authorization.replace("Bearer ", "");
-		}
-		return null;
-	}
-
 }

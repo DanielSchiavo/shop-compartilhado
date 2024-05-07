@@ -2,29 +2,25 @@ package br.com.danielschiavo.infra.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import br.com.danielschiavo.shop.model.cliente.Cliente;
 
+
 @Service
 public class UsuarioAutenticadoService {
-
-    public UserDetails getUsuarioAutenticado() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            return (UserDetails) authentication.getPrincipal();
-        }
-        return null;
-    }
-    
-    public String getUsernameUsuarioAutenticado() {
-        UserDetails userDetails = getUsuarioAutenticado();
-        return userDetails != null ? userDetails.getUsername() : null;
-    }
-    
+	
+	public Authentication getAuthentication() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
+	
     public Cliente getCliente() {
-        UserDetails userDetails = getUsuarioAutenticado();
-        return userDetails != null ? (Cliente) userDetails : null;
+        Authentication authentication = getAuthentication();
+        return (Cliente) authentication.getPrincipal();
+    }
+    
+    public String getTokenComBearer() {
+    	var jwtAuthenticationToken = (JwtAuthenticationToken) getAuthentication();
+    	return jwtAuthenticationToken.getToken();
     }
 }

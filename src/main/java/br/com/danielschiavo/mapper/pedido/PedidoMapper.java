@@ -9,7 +9,6 @@ import org.mapstruct.Mapper;
 import br.com.danielschiavo.shop.model.filestorage.ArquivoInfoDTO;
 import br.com.danielschiavo.shop.model.pedido.Pedido;
 import br.com.danielschiavo.shop.model.pedido.dto.MostrarProdutoDoPedidoDTO;
-import br.com.danielschiavo.shop.services.filestorage.FileStoragePedidoService;
 
 @Mapper(componentModel = "spring")
 public abstract class PedidoMapper {
