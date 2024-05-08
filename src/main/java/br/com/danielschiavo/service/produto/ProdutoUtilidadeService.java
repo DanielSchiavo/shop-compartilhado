@@ -18,11 +18,11 @@ public class ProdutoUtilidadeService {
 	@Autowired
 	private ProdutoRepository produtoRepository;
 
-	public Produto verificarSeProdutoExistePorIdEAtivoTrue(Long id) {
+	public Produto pegarProdutoPorIdEAtivoTrue(Long id) {
 		return produtoRepository.findByIdAndAtivoTrue(id).orElseThrow(() -> new ValidacaoException("Não existe um produto ativo com o id " + id));
 	}
 	
-	public Produto verificarSeProdutoExistePorId(Long id) {
+	public Produto pegarProdutoPorId(Long id) {
 		return produtoRepository.findById(id).orElseThrow(() -> new ValidacaoException("Não existe um produto com o id " + id));
 	}
 	

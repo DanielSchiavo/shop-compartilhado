@@ -121,7 +121,7 @@ public class InicializacaoDevEnv implements CommandLineRunner {
 						.adicionarRole(roleBuilder.id(null)
 												  .role(NomeRole.ADMIN).build())
 						.carrinho(true)
-						.comItemCarrinhoIdQuantidadeProduto(null, 3, produtos.get(0))
+						.comItemCarrinhoIdQuantidadeProduto(null, 3, produtos.get(0).getId())
 						.adicionarEndereco(enderecoBuilder.id(null)
 														  .cep("29142298")
 														  .rua("NaoSeiONome")

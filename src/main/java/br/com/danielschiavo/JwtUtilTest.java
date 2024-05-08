@@ -1,4 +1,4 @@
-package br.com.danielschiavo.shop;
+package br.com.danielschiavo;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

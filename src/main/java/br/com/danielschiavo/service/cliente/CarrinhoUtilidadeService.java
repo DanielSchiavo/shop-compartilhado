@@ -16,7 +16,7 @@ public class CarrinhoUtilidadeService {
 	@Autowired
 	private CarrinhoRepository carrinhoRepository;
 	
-	public Carrinho verificarEPegarCarrinhoCliente(Cliente cliente) {
+	public Carrinho pegarCarrinho(Cliente cliente) {
 		Carrinho carrinho = carrinhoRepository.findByCliente(cliente).get();
 		boolean empty = carrinho.getItemsCarrinho().isEmpty();
 		if (empty == false) {
@@ -27,7 +27,7 @@ public class CarrinhoUtilidadeService {
 	}
 
 	public boolean deletarItemsCarrinhoAposPedidoGerado(List<Long> ids, Cliente cliente) {
-		Carrinho carrinho = verificarEPegarCarrinhoCliente(cliente);
+		Carrinho carrinho = pegarCarrinho(cliente);
 		int linhasAfetadas = carrinhoRepository.deletarItemsCarrinhoPorListaDeIds(ids, carrinho.getClienteId());
 		return linhasAfetadas > 0;
 	}
