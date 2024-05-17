@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.danielschiavo.repository.produto.ProdutoRepository;
+import br.com.danielschiavo.repository.produto.ProdutoUtilidadeRepository;
 import br.com.danielschiavo.shop.model.ValidacaoException;
 import br.com.danielschiavo.shop.model.produto.Produto;
 import lombok.Setter;
@@ -16,7 +16,7 @@ import lombok.Setter;
 public class ProdutoUtilidadeService {
 
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private ProdutoUtilidadeRepository produtoRepository;
 
 	public Produto pegarProdutoPorIdEAtivoTrue(Long id) {
 		return produtoRepository.findByIdAndAtivoTrue(id).orElseThrow(() -> new ValidacaoException("Não existe um produto ativo com o id " + id));

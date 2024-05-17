@@ -11,7 +11,7 @@ import br.com.danielschiavo.shop.model.cliente.Cliente;
 import br.com.danielschiavo.shop.model.pedido.Pedido;
 import br.com.danielschiavo.shop.model.pedido.StatusPedido;
 
-public interface PedidoRepository extends JpaRepository<Pedido, UUID>{
+public interface PedidoUtilidadeRepository extends JpaRepository<Pedido, UUID>{
 
 	Page<Pedido> findAllByStatusPedido(StatusPedido confirmando, Pageable pageable);
 

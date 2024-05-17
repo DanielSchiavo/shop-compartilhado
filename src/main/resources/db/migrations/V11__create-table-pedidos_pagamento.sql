@@ -2,7 +2,7 @@ CREATE TABLE pedidos_pagamento (
 	id BIGSERIAL,
 	metodo_pagamento VARCHAR(50) NOT NULL,
 	status_pagamento VARCHAR(50) NOT NULL,
-	data_pagamento TIMESTAMP NOT NULL,
+	data_pagamento TIMESTAMP,
 	nome_banco VARCHAR(255),
 	numero_cartao CHAR(16),
 	nome_no_cartao VARCHAR(255),

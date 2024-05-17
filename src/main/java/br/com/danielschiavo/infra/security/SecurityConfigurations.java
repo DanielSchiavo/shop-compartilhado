@@ -25,11 +25,12 @@ public class SecurityConfigurations {
 	    return http.csrf(csrf -> csrf.disable())
 	            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	            .authorizeHttpRequests(req -> {
-        			req.requestMatchers("/shop/admin/**").hasRole("ADMIN");
-        			req.requestMatchers("/shop/cliente/**").hasRole("USER");
-        			req.requestMatchers("/shop/publico/**").permitAll();
+        			req.requestMatchers("/admin/**").hasRole("ADMIN");
+        			req.requestMatchers("/cliente/**").hasRole("USER");
+        			req.requestMatchers("/publico/**").permitAll();
+        			req.requestMatchers("/auth/login").anonymous();
+        			req.requestMatchers("/publico/cadastrar/cliente").anonymous();
         			req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
-        			req.requestMatchers("/shop/login", "/shop/publico/cadastrar/cliente").anonymous();
 	                req.anyRequest().authenticated();
 	            })
 	            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

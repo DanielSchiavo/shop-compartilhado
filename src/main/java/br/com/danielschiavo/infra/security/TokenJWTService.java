@@ -41,10 +41,6 @@ public class TokenJWTService {
 		}
 	}
 	
-	public Long getClaimIdJWT(String token) {
-		return decodeJWT(token).getClaim("id").asLong();
-	}
-	
 	public DecodedJWT decodeJWT(String tokenJWT) {
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -56,11 +52,11 @@ public class TokenJWTService {
 			throw new RuntimeException("Token JWT inválido ou expirado!");
 		}
 	}
-	
-	public String getSubject(String tokenJWT) {
-		return decodeJWT(tokenJWT).getSubject();
-	}
 
+	public Long verificarTokenEPegarIdUsuario(String token) {
+		return decodeJWT(token).getClaim("id").asLong();
+	}
+	
 	private Instant expirationDate() {
 		return LocalDateTime.now().plusDays(10).toInstant(ZoneOffset.of("-03:00"));
 	}

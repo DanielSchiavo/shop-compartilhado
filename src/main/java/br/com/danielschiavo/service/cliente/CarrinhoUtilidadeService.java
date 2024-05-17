@@ -5,31 +5,38 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.danielschiavo.repository.cliente.CarrinhoRepository;
-import br.com.danielschiavo.shop.model.ValidacaoException;
+import br.com.danielschiavo.repository.cliente.CarrinhoUtilidadeRepository;
 import br.com.danielschiavo.shop.model.cliente.Cliente;
 import br.com.danielschiavo.shop.model.cliente.carrinho.Carrinho;
+import br.com.danielschiavo.shop.model.cliente.carrinho.CarrinhoNaoExisteException;
+import br.com.danielschiavo.shop.model.cliente.carrinho.itemcarrinho.ItemCarrinhoException;
 
 @Service
 public class CarrinhoUtilidadeService {
 
 	@Autowired
-	private CarrinhoRepository carrinhoRepository;
+	private CarrinhoUtilidadeRepository carrinhoRepository;
 	
 	public Carrinho pegarCarrinho(Cliente cliente) {
-		Carrinho carrinho = carrinhoRepository.findByCliente(cliente).get();
+		return carrinhoRepository.findByCliente(cliente).orElseThrow(() -> {throw new CarrinhoNaoExisteException("Não existe carrinho para esse cliente");});
+	}
+
+	public void verificarSeTemItemsNoCarrinho(Cliente cliente, Carrinho carrinho) {
 		boolean empty = carrinho.getItemsCarrinho().isEmpty();
-		if (empty == false) {
-			return carrinho;
-		} else {
-			throw new ValidacaoException("Não existe um carrinho para o cliente de ID número " + cliente.getId());
+		if (empty == true) {
+			throw new ItemCarrinhoException("O cliente não tem items no carrinho no momento");
 		}
 	}
 
-	public boolean deletarItemsCarrinhoAposPedidoGerado(List<Long> ids, Cliente cliente) {
+	public String deletarItemsCarrinhoAposPedidoGerado(List<Long> ids, Cliente cliente) {
 		Carrinho carrinho = pegarCarrinho(cliente);
+		verificarSeTemItemsNoCarrinho(cliente, carrinho);
 		int linhasAfetadas = carrinhoRepository.deletarItemsCarrinhoPorListaDeIds(ids, carrinho.getClienteId());
-		return linhasAfetadas > 0;
+		if (linhasAfetadas > 0) {
+			return "Item removido com sucesso";
+		} else {
+			return "Não existe um produto no carrinho com esse ID";
+		}
 	}
 
 }
