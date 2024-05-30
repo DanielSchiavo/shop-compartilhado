@@ -13,6 +13,6 @@ import br.com.danielschiavo.shop.model.pedido.dto.ProdutoPedidoDTO;
 public interface ProdutoComumServiceClient {
 	
 	@GetMapping("/{produtosId}/pedido")
-	List<ProdutoPedidoDTO> pegarPrimeiraImagemEVerificarSeEstaAtivo(@PathVariable("produtosId") List<Long> produtosId);
+	List<ProdutoPedidoDTO> pegarProduto(@PathVariable("produtosId") List<Long> produtosId);
 
 }

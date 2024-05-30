@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import br.com.danielschiavo.shop.model.filestorage.ArquivoInfoDTO;
 
-@FeignClient(name = "file-storage-perfil-service", url = "http://localhost:8080/shop-filestorage/cliente/filestorage/perfil")
+@FeignClient(name = "file-storage-perfil-service", url = "${filestorage.service.client.url}")
 public interface FileStoragePerfilComumServiceClient {
 	
-	@GetMapping("/{nomeFotoPerfil}")
-	ArquivoInfoDTO getFotoPerfil(@PathVariable("nomeFotoPerfil") String nomeFotoPerfil, @RequestHeader("Authorization") String token);
-	
-	@DeleteMapping("/{nomeFotoPerfil}")
+	@DeleteMapping("/cliente/perfil/{nomeFotoPerfil}")
 	ArquivoInfoDTO deletarFotoPerfil(@PathVariable("nomeFotoPerfil") String nomeFotoPerfil, @RequestHeader("Authorization") String token);
+	
+	@GetMapping("/cliente/perfil/{nomeFotoPerfil}")
+	ArquivoInfoDTO getFotoPerfil(@PathVariable("nomeFotoPerfil") String nomeFotoPerfil, @RequestHeader("Authorization") String token);
 
 }

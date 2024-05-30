@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import br.com.danielschiavo.shop.model.filestorage.ArquivoInfoDTO;
 import br.com.danielschiavo.shop.model.filestorage.PersistirOuRecuperarImagemPedidoDTO;
 
-@FeignClient(name = "file-storage-pedido-service", url = "http://localhost:8080/shop-filestorage/cliente/filestorage/pedido")
+@FeignClient(name = "file-storage-pedido-service", url = "${filestorage.service.client.url}")
 public interface FileStoragePedidoComumServiceClient {
 	
-	@GetMapping("/{nomeImagemPedido}")
+	@GetMapping("/cliente/pedido/{nomeImagemPedido}")
 	ArquivoInfoDTO pegarImagemPedido(@PathVariable("nomeImagemPedido") String nomeImagemPedido, @RequestHeader("Authorization") String token);
 	
-	@PostMapping
+	@PostMapping("/cliente/pedido")
 	ArquivoInfoDTO persistirOuRecuperarImagemPedido(@RequestBody PersistirOuRecuperarImagemPedidoDTO persistirOuRecuperarImagemPedidoDTO, @RequestHeader("Authorization") String token);
 
 }

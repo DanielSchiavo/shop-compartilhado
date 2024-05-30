@@ -26,9 +26,11 @@ public class CustomErrorDecoder implements ErrorDecoder {
             case 404:
             	System.out.println(" ERRO 404 ");
                 return new NotFoundException();
+            case 403:
+            	return new BadRequestException("Usuario não tem permissão para usar esse endpoint");
             default:
             	System.out.println(" OUTRO ERRO ");
-                return new Exception("Generic error, ResponseBody = " + response.body().toString() + " / " + response.toString() + ", status" + response.status() + ", URL" + response.request().url());
+                return new Exception("Generic error, " + response.toString() + ", status" + response.status() + ", URL" + response.request().url());
         }
     }
 }
